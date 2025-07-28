@@ -1,9 +1,5 @@
-import HomeMainHero from '@/pages/HomeMainHero';
+import LoginComponent from '@/app/(auth)/login/page';
 
 export default function page() {
-  return (
-    <>
-      <HomeMainHero />
-    </>
-  );
+  return <LoginComponent />;
 }

@@ -1,6 +1,6 @@
 import Script from "next/script";
 import '../assets/styles/globals.css';
-import ChatbotButton from '@/components/chatbot/ChatbotButton';
+// import ChatbotButton from '@/components/chatbot/ChatbotButton';
 
 export const metadata = {
   title: 'Next.js',
@@ -21,7 +21,7 @@ export default function RootLayout({
         />
         {children}
         {/* <Footer/> */}
-        <ChatbotButton />
+        {/* <ChatbotButton /> */}
       </body>
     </html>
   );
