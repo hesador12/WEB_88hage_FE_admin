@@ -31,7 +31,7 @@ const AdminNotice = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get('https://funfun.cloud/api/admin/notices', { //여기서  `${API_BASE_URL}'를 하면 오류가 나는 이유가 뭘까요
+        const res = await axios.get('${API_BASE_URL}/api/admin/notices', {
           params: {
             page: currentPage - 1,
             size: pageSize,

@@ -131,7 +131,7 @@ const AdminGroup = () => {
     }
 
     alert('삭제가 완료되었습니다.');
-    fetchGroups();
+    await fetchGroups();
   } catch (error: any) {
     console.error('❗ 삭제 실패:', error);
     alert('삭제 중 오류가 발생했습니다.');

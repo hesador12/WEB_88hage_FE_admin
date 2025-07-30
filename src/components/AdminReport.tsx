@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import AdminLayout from '@/components/layout/AdminLayout';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 type AdminReportViewDTO = {
   id: number;
@@ -16,6 +17,7 @@ type AdminReportViewDTO = {
 };
 
 const AdminReport = () => {
+  const router = useRouter();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<'전체' | '미처리' | '처리 완료'>('전체');
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,26 +50,32 @@ const AdminReport = () => {
     });
   };
 
-  const fetchReports = async () => {
-    try {
-      const statusParam =
-        selectedFilter === '전체'
-          ? 'all'
-          : selectedFilter === '처리 완료'
-          ? 'resolved'
-          : 'unresolved';
+ const fetchReports = async () => {
+  try {
+    const statusParam =
+      selectedFilter === '전체'
+        ? 'all'
+        : selectedFilter === '처리 완료'
+        ? 'resolved'
+        : 'unresolved';
 
-      const res = await axios.get('https://funfun.cloud/api/admin/reports', {
-        params: { status: statusParam },
-        withCredentials: true,
-      });
+    const res = await axios.get('https://funfun.cloud/api/admin/reports', {
+      params: { status: statusParam },
+      withCredentials: true,
+    });
 
-      const data: AdminReportViewDTO[] = res.data.data;
-      setReports(data);
-    } catch (error) {
+    const data: AdminReportViewDTO[] = res.data.data;
+    setReports(data);
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      alert('관리자 로그인이 필요합니다.');
+      router.push('/');
+    } else {
       console.error('신고 내역 조회 실패:', error);
     }
-  };
+  }
+};
+
 
   const handleSubmitReport = async () => {
     if (!selectedReport) return;
@@ -156,8 +164,8 @@ const AdminReport = () => {
 
 {/* 테이블 바디 */}
 <div className="divide-y divide-[#2B2B2B]">
-  {paginatedData.map((item) => (
-    <div key={item.id} className="grid grid-cols-4 gap-4 px-6 py-6">
+  {paginatedData.map((item, index) => (
+  <div key={`${item.id}-${item.reportedAt}-${index}`} className="grid grid-cols-4 gap-4 px-6 py-6">
       <div className="text-sm text-[#BDBDBD] font-normal flex items-center justify-center">
         {sourceTypeLabel(item.sourceType)}
       </div>

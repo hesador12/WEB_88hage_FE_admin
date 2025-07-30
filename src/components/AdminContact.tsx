@@ -61,14 +61,18 @@ const AdminContact = () => {
 
   useEffect(() => {
     const fetchContacts = async () => {
-      setIsLoading(true);
-      try {
-        const status = toApiStatus(selectedFilter);
-        const queryParams = new URLSearchParams();
-        queryParams.append('status', status);
-        queryParams.append('page', String(currentPage - 1));
-        queryParams.append('size', String(pageSize));
-        queryParams.append('sort', 'createdAt,desc');
+  setIsLoading(true);
+  try {
+    const status = toApiStatus(selectedFilter);
+    const queryParams = new URLSearchParams();
+
+    if (status !== 'all') {
+      queryParams.append('status', status);
+    }
+
+    queryParams.append('page', String(currentPage - 1));
+    queryParams.append('size', String(pageSize));
+    queryParams.append('sort', 'createdAt,desc');
 
         const res = await fetch(`${API_BASE_URL}/api/admin/contacts?${queryParams.toString()}`, {
           credentials: 'include',

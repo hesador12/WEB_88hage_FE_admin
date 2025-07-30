@@ -44,7 +44,6 @@ const AdminFaq = () => {
         }
       });
 
-      // URL 쿼리 제거 (다시 뜨지 않게)
       const url = new URL(window.location.href);
       url.searchParams.delete('created');
       window.history.replaceState({}, '', url.toString());
@@ -57,7 +56,9 @@ const AdminFaq = () => {
 
   const fetchFaqs = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/faqs`);
+      const res = await axios.get(`${API_BASE_URL}/api/faqs`, {
+      withCredentials: true
+      });
       const sortedData = res.data.data.sort(
         (a: FaqDTO, b: FaqDTO) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );

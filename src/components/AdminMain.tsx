@@ -28,6 +28,8 @@ export default function AdminMain() {
 
   const [greeting, setGreeting] = useState(greetingOptions[0]);
 
+  const MotionLink = motion(Link);
+
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * greetingOptions.length);
     setGreeting(greetingOptions[randomIndex]);
@@ -42,10 +44,20 @@ export default function AdminMain() {
           <motion.div
             className="w-[220px] lg:w-[280px] flex-shrink-0"
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.03, y: -5 }}
+            animate={{ opacity: 1, y: 0,
+              rotate: greeting.text == '환영합니다, FUNFUN 소환사님' ? 360 : 0,
+            }}
+            whileHover={{ scale: 1.03, y: -5}}
             whileTap={{ scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 12 }}
+            transition={{
+               rotate: greeting.text === '환영합니다, FUNFUN 소환사님' ? {
+               repeat: Infinity,
+               duration: 8,
+               ease: 'linear'
+             } : undefined,
+             stiffness: 300,
+             damping: 12,
+            }}
           >
             <Image
               src={greeting.image}
@@ -72,21 +84,16 @@ export default function AdminMain() {
               <br />
               오늘도 fun-fun한 하루 되세요 ✨
             </p>
-
-            {/* 버튼: hover 효과 수정할까 고민중 */}
-            <motion.div
+            <MotionLink
+              href="https://funfun.cloud"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 300 }}
+              className="bg-[#1CEBB9] mt-6 rounded-2xl px-4 py-2 text-sm font-semibold text-black hover:brightness-110 transition"
             >
-              <Link
-                href="https://funfun.cloud"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#1CEBB9] mt-6 rounded-2xl px-4 py-2 text-sm font-semibold text-black hover:brightness-110 transition"
-              >
-                FUNFUN 메인 페이지로 이동
-              </Link>
-            </motion.div>
+              FUNFUN 메인 페이지로 이동
+            </MotionLink>
           </motion.div>
         </div>
       </div>
