@@ -71,7 +71,9 @@ const AdminFaq = () => {
   const handleDelete = async (id: number) => {
     const confirmDelete = window.confirm('정말로 이 FAQ를 삭제하시겠습니까?\n삭제 후 되돌릴 수 없습니다.');
     if (!confirmDelete) return;
-    await axios.delete(`${API_BASE_URL}/api/faqs/${id}`);
+    await axios.delete(`${API_BASE_URL}/api/faqs/${id}`, {
+  withCredentials: true,
+});
       setFaqData(prev => prev.filter(faq => faq.id !== id));
       toast.success('삭제 완료 !', {
       icon: () => <span>🗑️</span>,
@@ -86,7 +88,9 @@ const AdminFaq = () => {
 
   const handleViewDetail = async (id: number) => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/api/faqs/${id}`);
+      const res = await axios.get(`${API_BASE_URL}/api/faqs/${id}`, {
+  withCredentials: true,
+});
       setSelectedFaq(res.data.data);
       setIsModalOpen(true);
     } catch (err) {

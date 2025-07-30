@@ -31,13 +31,14 @@ const AdminNotice = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get('${API_BASE_URL}/api/admin/notices', {
-          params: {
-            page: currentPage - 1,
-            size: pageSize,
-            sort: 'createdAt,desc',
-          },
-        });
+      const res = await axios.get(`${API_BASE_URL}/api/admin/notices`, {
+  withCredentials: true, 
+  params: {
+    page: currentPage - 1,
+    size: pageSize,
+    sort: 'createdAt,desc',
+  },
+});
 
         const data = res.data?.data;
         setNotices(data.content || []);

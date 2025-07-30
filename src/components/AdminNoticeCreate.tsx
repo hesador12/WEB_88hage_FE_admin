@@ -22,10 +22,14 @@ const AdminNoticeCreate = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/admin/notices`, {
-        title,
-        content,
-      });
+      const res = await axios.post(
+  `${API_BASE_URL}/api/admin/notices`,
+  { title, content },
+  {
+    withCredentials: true,
+  }
+);
+
 
       if (res.status === 200) {
         alert('공지사항이 성공적으로 등록되었습니다.');

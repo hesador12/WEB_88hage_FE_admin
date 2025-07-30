@@ -22,10 +22,14 @@ const AdminFaqCreate = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/faqs`, {
-        title,
-        content,
-      });
+      const res = await axios.post(
+  `${API_BASE_URL}/api/faqs`,
+  { title, content },
+  {
+    withCredentials: true,
+  }
+);
+
 
       if (res.status === 201) {
         router.push('/admin/faq?created=1');

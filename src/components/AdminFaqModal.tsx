@@ -29,10 +29,14 @@ const AdminFaqModal: React.FC<FaqModalProps> = ({ isOpen, onClose, id, title, co
     try {
       setIsSaving(true);
       await axios.put(
-        `${API_BASE_URL}/api/faqs/${id}`,
-        { title: editedTitle, content: editedContent },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+  `${API_BASE_URL}/api/faqs/${id}`,
+  { title: editedTitle, content: editedContent },
+  {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  }
+);
+
       onUpdateSuccess(true);
       onClose();
     } catch (error) {
